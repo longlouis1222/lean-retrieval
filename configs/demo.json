@@ -1,0 +1,1 @@
+{"scales":[100,400,1200],"repeats":3,"k":10,"threads":1,"seed":42,"warmup":10,"efSearch":[16,64,128],"nprobe":[1,4,16]}

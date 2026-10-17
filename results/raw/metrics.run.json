@@ -1,0 +1,36 @@
+{
+  "timestamp": "2026-10-17T02:18:00.783739+00:00",
+  "machine": "Linux-6.18.55-x86_64-with-glibc2.39",
+  "cpu": "x86_64",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "numpy": "2.3.5",
+  "faiss": "1.15.1",
+  "seed": 42,
+  "config": {
+    "scales": [
+      100,
+      400,
+      1200
+    ],
+    "repeats": 3,
+    "k": 10,
+    "threads": 1,
+    "seed": 42,
+    "warmup": 10,
+    "efSearch": [
+      16,
+      64,
+      128
+    ],
+    "nprobe": [
+      1,
+      4,
+      16
+    ]
+  },
+  "manifest_sha256": "b723616a8d7474dabf306e2219813692fba1d9f2fcc2db026f7383eaa2a7b393",
+  "commit": "uncommitted-release",
+  "demo": true,
+  "timeout": "none; offline benchmark",
+  "status": "ok"
+}

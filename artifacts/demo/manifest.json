@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "demo": true,
+  "encoder": {
+    "backend": "hash-smoke",
+    "model": "sha256-token-hash",
+    "revision": "v1",
+    "dimension": 256,
+    "batch_size": 64,
+    "max_seq_length": 256,
+    "pooling": "signed token sum",
+    "normalize": true
+  },
+  "dtype": "float32",
+  "metric": "cosine via normalized inner product",
+  "source": {
+    "corpus": "50340974c188c581a6e2171356d2dfeca1b5b91d05be1c33fd8d4da2517c2b0d",
+    "queries": "c063973e07e196daf680b2aaf4a295f654467ee415767a0b314a1a94622e5856"
+  },
+  "files": {
+    "corpus.npy": "0ee21451faf96d0e8d40fbe853be79ac61205bc7d84f56b41319f23e429c801f",
+    "queries.npy": "2becb3547788e6d5c993ba02fce45998ade1ee34321c475c72effff765a86c12",
+    "corpus.json": "b4feb82458089e56b410197803466a2bd31f9d6d93f23b13eb12f5b1c1de70c7",
+    "queries.json": "b2fffcd88efcd6b7525f3288595c2a9d2ba0a0a49a9835c0ed3d30be53b5e999"
+  },
+  "rows": 1200,
+  "queries": 80,
+  "eligibility": "one frozen pool; producer must ensure all premises available before all test queries"
+}
