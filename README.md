@@ -2,20 +2,35 @@
 Bộ mã khởi đầu theo hướng dẫn INT4418, trang 12–14. Câu hỏi: ANN đánh đổi
 Recall@10, P95 và chi phí index thế nào khi số premise và tải tăng?
 
-**Trạng thái:** demo tổng hợp chạy được; chưa có split LeanDojo chung nhóm 3,
-chưa tải pretrained encoder, chưa có kết quả thực nghiệm Lean thật.
+**Trạng thái:** demo tổng hợp chạy được; đã tải LeanDojo Benchmark 4, đã convert
+sang data contract, đã embedding với all-MiniLM-L6-v2, đã chạy benchmark trên
+filtered subset (4,692 premises), đã chạy load test, error analysis, và ablation
+study. Chưa thống nhất split với nhóm 3, chưa chạy 10K/100K/full scale.
 
 ## Tám đầu ra
-| Đầu ra | File / thư mục |
-|---|---|
-| Embedding pipeline | scripts/embed.py; scripts/spark_embed.py |
-| Vector manifest | artifacts/demo/manifest.json |
-| Exact baseline | src/lean_retrieval/core.py: IndexFlatIP |
-| ANN indexes | artifacts/demo/*_hnsw.faiss, *_ivf.faiss |
-| Search service | src/lean_retrieval/service.py |
-| Pareto plots | results/figures/pareto_*.png |
-| Evaluation | scripts/evaluate.py, plot.py, load_test.py |
-| README/demo | README.md; docs/DEMO.md |
+|| Đầu ra | File / thư mục |
+||---|---|
+|| Embedding pipeline | scripts/embed.py; scripts/spark_embed.py |
+|| Vector manifest | artifacts/demo/manifest.json |
+|| Exact baseline | src/lean_retrieval/core.py: IndexFlatIP |
+|| ANN indexes | artifacts/demo/*_hnsw.faiss, *_ivf.faiss |
+|| Search service | src/lean_retrieval/service.py |
+|| Pareto plots | results/figures/pareto_*.png |
+|| Evaluation | scripts/evaluate.py, plot.py, load_test.py |
+|| README/demo | README.md; docs/DEMO.md |
+
+## Kết quả thực tế (Filtered Subset)
+- **Dataset**: LeanDojo Benchmark 4 v10 (180,973 premises → 4,692 filtered)
+- **Encoder**: all-MiniLM-L6-v2 (revision: ee8519ce6a28a61c9190da0a16e199d262197a1b)
+- **Premise Recall@10**: 32.8% (Flat baseline)
+- **MRR@10**: 43.6%
+- **Error rate**: 67.3% queries có lỗi retrieval
+- **Ablation**: Preprocessing Unicode → ASCII không cải thiện recall
+
+Xem chi tiết:
+- docs/RESULTS_SUMMARY.md - Kết quả benchmark
+- docs/ERROR_ANALYSIS.md - Phân tích lỗi
+- docs/ABLATION_PREPROCESSING.md - Ablation study
 
 ## Chạy trên Mac / Linux (khuyến nghị Python 3.11 hoặc 3.12)
 ```bash

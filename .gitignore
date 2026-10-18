@@ -1,0 +1,38 @@
+# Large datasets
+data/
+
+# Artifacts (embeddings, indexes)
+artifacts/
+
+# Model cache
+.cache/
+.huggingface/
+
+# Results (large CSV files)
+results/raw/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.venv/
+venv/
+.venv/
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.log
