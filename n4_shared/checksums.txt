@@ -1,0 +1,4 @@
+# Gói chia sẻ N3→N4 — leandojo-benchmark-4@29dcec07+split-v1.0
+# pool_id: shared-frozen-pool
+c9157bd1381ca4147aa931f14b9985ac9bfe5cbfe892a982a24a133ff4221efd  corpus.jsonl
+c2b764fafe981755ae7ca2614912498f0559317ea5427bcb7a7150cb45166004  queries.jsonl
