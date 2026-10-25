@@ -26,7 +26,14 @@ for name, rows in [('corpus',c),('queries',q)]:
     np.save(out/f'{name}.npy',arr)
     write_json(out/f'{name}.json',rows)
 if a.model:
-    write_json(out/'model_config.json',e.model.get_config_dict())
+    # SentenceTransformer doesn't have get_config_dict, use config from object
+    model_config = {
+        'model_name': a.model,
+        'revision': a.revision,
+        'max_seq_length': e.model.max_seq_length if hasattr(e.model, 'max_seq_length') else 256,
+        'dimension': e.model.get_sentence_embedding_dimension()
+    }
+    write_json(out/'model_config.json', model_config)
 spec['dimension']=arr.shape[1]
 files=['corpus.npy','queries.npy','corpus.json','queries.json']
 write_json(out/'manifest.json',dict(schema_version='1.0',demo=not bool(a.model),encoder=spec,dtype='float32',metric='cosine via normalized inner product',source={k:sha(getattr(a,k)) for k in ['corpus','queries']},files={f:sha(out/f) for f in files},rows=len(c),queries=len(q),eligibility='one frozen pool; producer must ensure all premises available before all test queries'))

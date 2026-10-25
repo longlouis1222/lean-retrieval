@@ -1,0 +1,17 @@
+{
+  "scales": ["full"],
+  "repeats": 3,
+  "k": 10,
+  "threads": 1,
+  "seed": 42,
+  "warmup": 20,
+  "hnsw": {
+    "M": 16,
+    "efConstruction": 100,
+    "efSearch": [16, 64, 128]
+  },
+  "ivf": {
+    "nlist": 4522,
+    "nprobe": [1, 8, 32]
+  }
+}
