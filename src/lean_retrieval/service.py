@@ -10,6 +10,7 @@ from .core import Encoder,sha
 class Request(BaseModel):
     query: str=Field(min_length=1,max_length=10000)
     k: int=Field(default=10,ge=1,le=100)
+    query_id: str=Field(default='',description='Optional query ID for self-match filtering (for benchmark evaluation)')
 
 @asynccontextmanager
 async def lifespan(app):
@@ -38,4 +39,13 @@ def search(r:Request):
     t=time.perf_counter()
     with app.state.lock:
         q=encoded(r.query);scores,ids=app.state.index.search(np.ascontiguousarray(q),min(r.k,app.state.index.ntotal))
-    return dict(query=r.query,elapsed_ms=(time.perf_counter()-t)*1000,demo=app.state.manifest['demo'],results=[dict(**app.state.meta[int(i)],score=float(s)) for s,i in zip(scores[0],ids[0]) if i>=0])
+    # Filter self-matches if query_id is provided (for benchmark evaluation)
+    filtered_results=[]
+    for rank,(s,i) in enumerate(zip(scores[0],ids[0]),1):
+        if i>=0:
+            premise=app.state.meta[int(i)]
+            # Filter self-match: corpus trừ chính định lý truy vấn
+            if r.query_id and premise['id']==r.query_id:
+                continue
+            filtered_results.append(dict(rank=rank,**premise,score=float(s)))
+    return dict(query=r.query,query_id=r.query_id,elapsed_ms=(time.perf_counter()-t)*1000,demo=app.state.manifest['demo'],results=filtered_results[:r.k])

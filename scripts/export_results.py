@@ -13,7 +13,7 @@ from lean_retrieval.core import build
 
 
 def export_retrieval_results(artifacts_path, config_path, output_prefix):
-    """Export retrieval results for each index configuration."""
+    """Export retrieval results for each index configuration with standard format."""
     artifacts = Path(artifacts_path)
     with open(config_path, encoding='utf-8') as f:
         config = json.load(f)
@@ -59,19 +59,23 @@ def export_retrieval_results(artifacts_path, config_path, output_prefix):
                 idx.nprobe = min(param, idx.nlist)
 
             # Search
-            _, results = idx.search(q, k)
+            scores, results = idx.search(q, k)
 
-            # Export to CSV (top-k results per query)
+            # Export to CSV with standard format: query_id, premise_id, rank, score, run_id
+            run_id = f"{kind}_{param}"
             output_file = Path('results/raw') / f'{output_prefix}_{kind}_{param}.csv'
             with open(output_file, 'w', newline='', encoding='utf-8') as f:
                 writer = csv.writer(f)
-                writer.writerow(['query_id', 'premise_id'])
-                for i, row in enumerate(results):
+                writer.writerow(['query_id', 'premise_id', 'rank', 'score', 'run_id'])
+                for i, (row, row_scores) in enumerate(zip(results, scores)):
                     query_id = queries[i]['id']
-                    for j in row[:k]:  # Top-k
+                    for rank, (j, score) in enumerate(zip(row, row_scores), 1):
                         if j >= 0:
                             premise_id = selected_ids[j]
-                            writer.writerow([query_id, premise_id])
+                            # Filter self-match: corpus trừ chính định lý truy vấn
+                            if premise_id == query_id:
+                                continue
+                            writer.writerow([query_id, premise_id, rank, float(score), run_id])
 
             print(f'Exported {output_file}')
 
