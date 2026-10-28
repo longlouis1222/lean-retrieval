@@ -1,0 +1,50 @@
+{
+  "timestamp": "2026-10-28T15:05:57.629955+00:00",
+  "machine": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "cpu": "",
+  "python": "3.12.15 (main, Oct  3 2026, 01:03:07) [Clang 22.1.3 ]",
+  "numpy": "2.5.4",
+  "faiss": "1.15.1",
+  "seed": 42,
+  "config": {
+    "scales": [
+      100,
+      400,
+      1200
+    ],
+    "repeats": 3,
+    "k": 10,
+    "threads": 1,
+    "seed": 42,
+    "warmup": 10,
+    "efSearch": [
+      16,
+      64,
+      128
+    ],
+    "nprobe": [
+      1,
+      4,
+      16
+    ],
+    "hnsw": {
+      "efSearch": [
+        16,
+        64,
+        128
+      ]
+    },
+    "ivf": {
+      "nprobe": [
+        1,
+        4,
+        16
+      ]
+    }
+  },
+  "manifest_sha256": "9216bd8def6918e806dec29f198963198151ccafa23453ab705731d495d5ff90",
+  "commit": "1217783f7b0796e6503211986ddfb505e19b009d",
+  "demo": true,
+  "timeout": "none; offline benchmark",
+  "status": "ok"
+}

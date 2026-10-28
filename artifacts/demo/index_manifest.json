@@ -1,0 +1,69 @@
+{
+  "manifest_sha256": "9216bd8def6918e806dec29f198963198151ccafa23453ab705731d495d5ff90",
+  "artifact_version": "3f9d9f7bd44f",
+  "indexes": {
+    "100_flat.faiss": {
+      "sha256": "942fed00e0c94a64642ac51f0cbd2919712102dbe551c39982e3717f373e0349",
+      "kind": "flat",
+      "ntotal": 100,
+      "id_order_sha256": "12609c50e14ec613ebbd639c15f4a4a6835c31acc2eb6a26314e0d47eceb7cff",
+      "build_seed": 42
+    },
+    "100_hnsw.faiss": {
+      "sha256": "432696b928fb5d2a3c80ada481d989cc0d979850617534020a19379da7c4f761",
+      "kind": "hnsw",
+      "ntotal": 100,
+      "id_order_sha256": "12609c50e14ec613ebbd639c15f4a4a6835c31acc2eb6a26314e0d47eceb7cff",
+      "build_seed": 42
+    },
+    "100_ivf.faiss": {
+      "sha256": "7062d831f5e5f3303510152076a43ba7da5e7c2ca13c5107610b741a0482075c",
+      "kind": "ivf",
+      "ntotal": 100,
+      "id_order_sha256": "12609c50e14ec613ebbd639c15f4a4a6835c31acc2eb6a26314e0d47eceb7cff",
+      "build_seed": 42
+    },
+    "400_flat.faiss": {
+      "sha256": "7dcf78978830eb085adde2051cac1ec8a18022d490ff0f7a171b9e7628da8c1b",
+      "kind": "flat",
+      "ntotal": 400,
+      "id_order_sha256": "d58810c2d13332d8e0d4b47158fd3ea090d80e4428d76a3f6964eb71e2c7cea6",
+      "build_seed": 42
+    },
+    "400_hnsw.faiss": {
+      "sha256": "791140683c95d39fe461e4b90b1ea7f2572a6d245972ed7ebc23268dd99e87cb",
+      "kind": "hnsw",
+      "ntotal": 400,
+      "id_order_sha256": "d58810c2d13332d8e0d4b47158fd3ea090d80e4428d76a3f6964eb71e2c7cea6",
+      "build_seed": 42
+    },
+    "400_ivf.faiss": {
+      "sha256": "9d4b14a62be21ec7bd34ca6aefe2793e07e42267bed4d3eafab0957e1ec4693e",
+      "kind": "ivf",
+      "ntotal": 400,
+      "id_order_sha256": "d58810c2d13332d8e0d4b47158fd3ea090d80e4428d76a3f6964eb71e2c7cea6",
+      "build_seed": 42
+    },
+    "1200_flat.faiss": {
+      "sha256": "31f43ccdb67cc4d51cc5cb596cc56ad936a70fd5859dd1ab300a55ce50942927",
+      "kind": "flat",
+      "ntotal": 1200,
+      "id_order_sha256": "ece389e7be5c8da0fff45453af81069550d06a6895731864fb04d583944d79ec",
+      "build_seed": 42
+    },
+    "1200_hnsw.faiss": {
+      "sha256": "b823d670dc13297cf506a78e0a716317a4fe3e71987478188ce7a6644059257c",
+      "kind": "hnsw",
+      "ntotal": 1200,
+      "id_order_sha256": "ece389e7be5c8da0fff45453af81069550d06a6895731864fb04d583944d79ec",
+      "build_seed": 42
+    },
+    "1200_ivf.faiss": {
+      "sha256": "2f96e821c6ca16e3ecb95aa2384eddddf5738a372c02d50b860caa93c97a427d",
+      "kind": "ivf",
+      "ntotal": 1200,
+      "id_order_sha256": "ece389e7be5c8da0fff45453af81069550d06a6895731864fb04d583944d79ec",
+      "build_seed": 42
+    }
+  }
+}

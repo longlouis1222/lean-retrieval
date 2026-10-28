@@ -45,6 +45,41 @@ class Encoder:
         return a
 
 
+def id_order_sha(ids):
+    # Binds vector row i to premise ID i; any reorder/insert/delete changes the hash.
+    return hashlib.sha256('\n'.join(ids).encode('utf-8')).hexdigest()
+
+
+def quarantine(corpus, queries):
+    """Split invalid records out instead of aborting the whole batch."""
+    good_c, good_q, bad, seen = [], [], [], set()
+    for p in corpus:
+        reason = ('missing_id' if not p.get('id') else 'duplicate_id' if p['id'] in seen else
+                  'empty_statement' if not str(p.get('statement') or '').strip() else
+                  'missing_source_commit' if not p.get('source_commit') else None)
+        if reason: bad.append(dict(kind='premise', id=p.get('id'), reason=reason, record=p))
+        else: good_c.append(p); seen.add(p['id'])
+    qseen = set()
+    for q in queries:
+        reason = ('missing_id' if not q.get('id') else 'duplicate_id' if q['id'] in qseen else
+                  'empty_statement' if not str(q.get('statement') or '').strip() else
+                  'wrong_split_or_pool' if q.get('split') != 'test' or q.get('pool_id') != 'shared-frozen-pool' else
+                  'self_in_pool' if q['id'] in seen else
+                  'gold_outside_pool' if not set(q.get('relevant_ids') or []) <= seen else None)
+        if reason: bad.append(dict(kind='query', id=q.get('id'), reason=reason, record=q))
+        else: good_q.append(q); qseen.add(q['id'])
+    return good_c, good_q, bad
+
+
+def verify_index(path, ids, index_manifest):
+    """Reject an index whose bytes or row->ID order differ from what was benchmarked."""
+    entry = index_manifest.get('indexes', {}).get(Path(path).name)
+    if entry is None: raise RuntimeError(f'Index not registered in index_manifest: {Path(path).name}')
+    if sha(path) != entry['sha256']: raise RuntimeError('Index checksum mismatch')
+    if id_order_sha(ids) != entry['id_order_sha256']: raise RuntimeError('Index ID order mismatch')
+    return entry
+
+
 def validate(corpus, queries):
     ids = [x['id'] for x in corpus]
     assert len(ids) == len(set(ids)) and ids, 'Corpus IDs must be unique and nonempty'
