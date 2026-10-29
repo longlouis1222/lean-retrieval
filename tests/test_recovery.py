@@ -46,3 +46,14 @@ def test_index_checksum_and_id_order_are_enforced(tmp_path):
     with pytest.raises(RuntimeError,match='ID order'):verify_index(path,ids[::-1],im)   # same count, wrong order
     raw=bytearray(path.read_bytes());raw[-1]^=1;path.write_bytes(bytes(raw))
     with pytest.raises(RuntimeError,match='checksum'):verify_index(path,ids,im)
+
+def test_service_requires_index_manifest(tmp_path,monkeypatch):
+    from fastapi.testclient import TestClient
+    from lean_retrieval.service import app
+    src=ROOT/'artifacts'/'demo';m=json.loads((src/'manifest.json').read_text())
+    for f in [*m['files'],'manifest.json','index_manifest.json','1200_hnsw.faiss']:(tmp_path/f).write_bytes((src/f).read_bytes())
+    monkeypatch.setenv('ARTIFACTS',str(tmp_path))
+    with TestClient(app) as c:assert c.get('/health').json()['artifact_version']==m['artifact_version']
+    (tmp_path/'index_manifest.json').unlink()                 # deleting the registry must not skip verification
+    with pytest.raises(RuntimeError,match='index_manifest'):
+        with TestClient(app):pass

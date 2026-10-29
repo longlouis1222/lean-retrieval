@@ -25,6 +25,8 @@ async def lifespan(app):
     if 'id_order_sha256' in m and id_order_sha(ids)!=m['id_order_sha256']:raise RuntimeError('Corpus ID order mismatch')
     # Count check alone cannot prove row order; require the index registered by evaluate.py.
     im=b/'index_manifest.json'
+    # Versioned (schema 1.1) artifacts must ship it; deleting it must not bypass the check.
+    if not im.exists() and 'artifact_version' in m:raise RuntimeError('index_manifest.json missing for versioned artifact')
     if im.exists():
         im=json.loads(im.read_text())
         if im.get('manifest_sha256')!=sha(b/'manifest.json'):raise RuntimeError('index_manifest built from another manifest')
